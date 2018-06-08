@@ -81,13 +81,13 @@ class CategorieController extends Controller
      */
      public function reponse(Request $request, Categorie $categorie, $id)
      {
-        $user=$this->getUser()->getId();
+        $ip=$request->getClientIp();
         $reponse=$request->request->get('reponse');
         $question=$request->request->get('question');
         $categorie=$request->request->get('categorie');
 
         $UserRepository = $this->getDoctrine()->getRepository(User::class);
-        $userid=$UserRepository->findOneBy(['id' => $user]);
+        $userid=$UserRepository->findOneBy(['ip' => $ip]);
 
         $ReponseRepository = $this->getDoctrine()->getRepository(Reponse::class);
         $reponseid=$ReponseRepository->findOneBy(['id' => $reponse]);
@@ -107,16 +107,7 @@ class CategorieController extends Controller
 
         $entityManager->flush();
 
-        // $categorie = new Categorie();
-        // $form = $this->createForm(CategorieType::class, $categorie);
-        // $form->handleRequest($request);
-        //
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $em = $this->getDoctrine()->getManager();
-        //     $em->persist($categorie);
-        //     $em->flush();
-
-         return new JsonResponse(['rep'=> $reponse, 'quest'=>$question, 'cat'=>$categorie, 'user'=>$user]);
+         return new JsonResponse(['rep'=> $reponse, 'quest'=>$question, 'cat'=>$categorie, 'user'=>$userid]);
      }
     /**
      * @Route("/{id}/edit", name="categorie_edit", methods="GET|POST")

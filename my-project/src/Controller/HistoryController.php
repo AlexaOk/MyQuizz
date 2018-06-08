@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\History;
 use App\Entity\Question;
 use App\Entity\Reponse;
+use App\Entity\Categorie;
 use App\Entity\User;
 use App\Form\HistoryType;
 use App\Repository\HistoryRepository;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @Route("/history")
@@ -19,24 +21,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class HistoryController extends Controller
 {
     /**
-     * @Route("/", name="history_index", methods="GET")
+     * @Route("/{id}/user", name="history_index", methods="GET")
      */
-    public function index(HistoryRepository $historyRepository, Request $request): Response
+    public function index(HistoryRepository $historyRepository, Request $request, $id,  SessionInterface $session): Response
     {
-  //     $entityManager = $this->getDoctrine()->getManager();
+        $CategorieRepository = $this->getDoctrine()->getRepository(Categorie::class);
+        $categoriename=$CategorieRepository->findOneBy(['id' => $id]);
+        $categoriename=$categoriename->getName();
 
-    // $user=$this->getUser()->getId();
-    //
-    // $UserRepository = $this->getDoctrine()->getRepository(User::class);
-    // $userid=$UserRepository->findBy(['id' => $user]);
-    //
-    //
-    // $entityManager = $this->getDoctrine()->getManager();
-
-  // returns an array of Product objects
-// return $query->execute();
-//
-        return $this->render('history/index.html.twig', ['histories' => $historyRepository->findAll()]);
+        return $this->render('history/index.html.twig', ['histories' => $historyRepository->findAll(), 'categorie'=>$id, 'categorieName' => $categoriename]);
     }
 
     /**

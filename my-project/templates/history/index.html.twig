@@ -3,24 +3,49 @@
 {% block title %}History index{% endblock %}
 
 {% block body %}
-    <h1>History index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Created_at</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h2>Score pour la catégorie "{{categorieName}}"</h2>
 
-        {% for history in histories %}
-            {{ history.reponseId }}
+    {% set myArray = [] %}
+    {% set Arraycount = [] %}
+    {% set count = 0 %}
 
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('history_new') }}">Create new</a>
+    {% for history in histories %}
+
+    {% if history.reponseId.question.category.id == categorie %}
+    {% set Arraycount = Arraycount|merge([history.questionId]) %}
+    <br>
+
+    {%set count = count + 1 %}
+    <h4>Question {{count}}</h4>
+    <h5>{{history.questionId}}</h5>
+    <br>
+    <ul>
+    <li>Votre réponse : {{ history.reponseId }} </li>
+
+    {% for rep  in history.questionId.reponses %}
+
+    {% if rep.reponseExpected == 1 %}
+    <li>La bonne réponse est : {{rep.reponse}} </li>
+    {% endif %}
+
+
+    {% endfor %}
+  </ul>
+    {% if history.reponseId.reponseExpected== 1 %}
+    {% set myArray = myArray|merge([ history.reponseId.reponseExpected]) %}
+
+    <p>1 Point</p>
+    {% endif %}
+    {% if history.reponseId.reponseExpected == NULL %}
+    <p>0 point</p>
+    {% endif %}
+
+    {% endif %}
+    {% endfor %}
+    <h4>{{myArray|length}}/{{Arraycount|length}} Bonnes reponses au Quizz</h4>
+
+  </tbody>
+
 {% endblock %}

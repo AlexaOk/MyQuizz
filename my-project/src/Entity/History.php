@@ -36,6 +36,11 @@ class History
      */
     private $Created_at;
 
+    public function __toString()
+    {
+      return (string) $this->id; 
+    }
+
     public function getId()
     {
         return $this->id;

@@ -8,9 +8,12 @@
 {# total items count #}
 <h2>{{ categorie.name }}</h2>
 <input class="catId" name="catId" type="hidden" value="{{categorie.id}}">
+
+
 <div class="count">
     <h4>{{ pagination.getTotalItemCount }} Questions </h4>
 </div>
+<h4>Question numero {{pagination.CurrentPageNumber}}</h4>
 <table>
 
 {# table body #}
@@ -41,7 +44,7 @@
  </form>
 
  {% if pagination.pageCount == pagination.CurrentPageNumber %}
-  <a href="" type="button">Score</a> 
+  <a href="/history/{{categorie.id}}/user" type="button">Score</a>
  {% endif %}
 
 <script>
