@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+
+
+{# total items count #}
+<h2>{{ categorie.name }}</h2>
+<input class="catId" name="catId" type="hidden" value="{{categorie.id}}">
+<div class="count">
+    <h4>{{ pagination.getTotalItemCount }} Questions </h4>
+</div>
+<table>
+
+{# table body #}
+{% for article in pagination %}
+<tr {% if loop.index is odd %}class="color"{% endif %}>
+<input class="questId" name="questId" type="hidden" value="{{article.id}}">
+<li>{{article.question}}</li>
+{%for item in article.reponses| sortbyfield('reponse') %}
+<form>
+<ul style="list-style-type : none">
+<li><input type="radio" name="reponse" class="reponse" value="{{item.id}}">  {{item.reponse}}</li>
+
+{% if item.reponseExpected == 1 %}
+<div class="realreponse" name="realreponse" type="">La réponse est : {{item.reponse}}</div>
+{% endif %}
+</ul>
+</tr>
+{% endfor %}
+{% endfor %}
+</table>
+
+{# display navigation #}
+
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+ </form>
+
+ {% if pagination.pageCount == pagination.CurrentPageNumber %}
+  <a href="" type="button">Score</a> 
+ {% endif %}
+
+<script>
+
+$(document).ready(function(){
+           $(".realreponse").hide();
+           $(".questId").hide();
+           $(".catId").hide();
+           $('.reponse').click(function(){
+              var reponse = $(".reponse:checked").val();
+              var question = $(".questId").val();
+              var categorie= $(".catId").val();
+               $.ajax({
+                 url: 'http://localhost:8000/categorie/{{ categorie.getId() }}/reponse',
+                  type: "POST",
+                  dataType: "json",
+                  async: true,
+                  data: {
+                      "reponse": reponse,
+                      "question": question,
+                      "categorie": categorie,
+                  },
+                  success: function (data)
+                  {
+                       $(".realreponse").show();
+                       $('.reponse').attr('disabled', true);
+                  }
+              });
+          });
+       });
+</script>
+{% endblock %}
