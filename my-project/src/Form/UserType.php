@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\BooleanType;
 
 class UserType extends AbstractType
 {
@@ -20,6 +21,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('username', TextType::class)
             ->add('ip', HiddenType::class)
+            ->add('is_active',HiddenType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Password'),

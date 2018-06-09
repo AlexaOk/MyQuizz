@@ -70,6 +70,11 @@ class User implements UserInterface
      */
     private $histories;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $isActive=0;
+
     public function __construct() {
         $this->roles = array('ROLE_USER');
         $this->history_id = new ArrayCollection();
@@ -219,5 +224,17 @@ class User implements UserInterface
 
         return $this;
     }
-    
+
+    public function getIsActive(): ?int
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(int $isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
 }
