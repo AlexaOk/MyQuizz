@@ -33,6 +33,20 @@ class HistoryController extends Controller
     }
 
     /**
+    * @Route("/scores", name="history_scores", methods="GET")
+    */
+    public function scores(Request $request)
+    {
+      $categorie = $this->getDoctrine()
+      ->getRepository(Categorie::class)
+      ->findAll();
+
+      return $this->render('history/show.html.twig', array(
+        'categorie' => $categorie,
+      ));
+    }
+
+    /**
      * @Route("/new", name="history_new", methods="GET|POST")
      */
     public function new(Request $request): Response

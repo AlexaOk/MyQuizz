@@ -40,7 +40,7 @@ class ReponseController extends Controller
             $em->persist($reponse);
             $em->flush();
 
-            return $this->redirectToRoute('reponse_index');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('reponse/new.html.twig', [

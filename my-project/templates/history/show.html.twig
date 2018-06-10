@@ -3,24 +3,13 @@
 {% block title %}History{% endblock %}
 
 {% block body %}
-    <h1>History</h1>
+    <h1>Scores</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ history.id }}</td>
-            </tr>
-            <tr>
-                <th>Created_at</th>
-                <td>{{ history.CreatedAt ? history.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <h4>Catégories:</h4>
+    <ul id="navigation">
+      {% for cat in categorie %}
+          <li>  <a href="/history/{{cat.id}}/user" type="button">{{cat.name}}</a></li>
+      {% endfor %}
+  </ul>
 
-    <a href="{{ path('history_index') }}">back to list</a>
-
-    <a href="{{ path('history_edit', {'id': history.id}) }}">edit</a>
-
-    {{ include('history/_delete_form.html.twig') }}
 {% endblock %}

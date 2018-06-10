@@ -47,7 +47,7 @@ class CategorieController extends Controller
             $em->persist($categorie);
             $em->flush();
 
-            return $this->redirectToRoute('categorie_index');
+            return $this->redirectToRoute('question_new', array('catId'=> $categorie->getId()));
         }
 
         return $this->render('categorie/new.html.twig', [

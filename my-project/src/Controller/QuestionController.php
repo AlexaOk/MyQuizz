@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Question;
+use App\Entity\Categorie;
 use App\Entity\Reponse;
 use App\Form\QuestionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,13 +36,13 @@ class QuestionController extends Controller
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($question);
             $em->flush();
 
-            return $this->redirectToRoute('question_index');
+            return $this->redirectToRoute('reponse_new');
         }
 
         return $this->render('question/new.html.twig', [
