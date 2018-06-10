@@ -14,6 +14,10 @@
 
         {% block body %}
 
+        {% if is_granted('ROLE_ADMIN') %}
+          <a href="/admin">Admin</a>
+        {% endif %}
+
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <a href="{{ url('history_scores') }}">Scores</a>
         <a href="{{ url('categorie_new') }}">Créer un Quizz</a>
