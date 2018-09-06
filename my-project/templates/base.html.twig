@@ -23,6 +23,7 @@
         <a href="{{ url('categorie_new') }}">Créer un Quizz</a>
         <a  href="/logout">Deconnexion</a>
         {% else %}
+        <a href="{{ url('history_scores') }}">Scores</a>
         <a href="/register">Inscription</a>
         <a href="/login">Connexion</a>
         {% endif %}
